@@ -12,7 +12,7 @@ async function configurePlayground(): Promise<Playground> {
   const go = new Go();
 
   const result = await WebAssembly.instantiateStreaming(
-    fetch("/playground.wasm"),
+    fetch(import.meta.env.BASE_URL + "playground.wasm"),
     go.importObject
   );
 
