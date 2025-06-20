@@ -3,9 +3,10 @@
 package main
 
 import (
-	"fmt"
-	"strings"
 	"syscall/js"
+
+	"github.com/antlr4-go/antlr/v4"
+	"github.com/tempo-lang/tempo/compiler"
 )
 
 func compileWrapper() js.Func {
@@ -13,9 +14,16 @@ func compileWrapper() js.Func {
 		if len(args) != 1 {
 			return "Invalid no of arguments passed"
 		}
-		inputJSON := args[0].String()
-		fmt.Printf("input %s\n", inputJSON)
-		return strings.ToUpper(inputJSON)
+
+		inputSource := args[0].String()
+
+		inputStream := antlr.NewInputStream(inputSource)
+		output, err := compiler.Compile(inputStream, nil)
+		if err != nil {
+			return "compiler errors"
+		}
+
+		return output
 	})
 
 	return jsonFunc
