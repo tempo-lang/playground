@@ -1,7 +1,18 @@
 import { useState, useEffect } from "react";
 
+type CompilerError = {
+  error: string;
+  start?: [number, number];
+  end?: [number, number];
+};
+
+type CompilerOutput = {
+  errors: CompilerError[];
+  output?: string;
+};
+
 type Playground = {
-  compile(input: string): string;
+  compile(input: string): CompilerOutput;
 };
 
 declare global {
@@ -11,10 +22,7 @@ declare global {
 async function configurePlayground(): Promise<Playground> {
   const go = new Go();
 
-  const result = await WebAssembly.instantiateStreaming(
-    fetch(import.meta.env.BASE_URL + "playground.wasm"),
-    go.importObject
-  );
+  const result = await WebAssembly.instantiateStreaming(fetch(import.meta.env.BASE_URL + "playground.wasm"), go.importObject);
 
   go.run(result.instance);
 
@@ -22,9 +30,7 @@ async function configurePlayground(): Promise<Playground> {
 }
 
 export function usePlayground(): Playground | undefined {
-  const [playground, setPlayground] = useState<Playground | undefined>(
-    undefined
-  );
+  const [playground, setPlayground] = useState<Playground | undefined>(undefined);
 
   useEffect(() => {
     console.log("call configure");
