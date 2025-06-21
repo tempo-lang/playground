@@ -1,7 +1,23 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+.ͼ2 .cm-gutters {
+    background-color: white;
+    border: none;
+}
+
+.cm-editor.cm-focused {
+    outline: none !important;
+}
 
 pre code {
-  background-color: #eee;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  display: block;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    display: block;
 }

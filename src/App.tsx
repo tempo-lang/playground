@@ -22,11 +22,19 @@ function App() {
   const output = playground ? playground.compile(source) : "loading...";
 
   return (
-    <>
-      <h1>Tempo Playground</h1>
-      <CodeMirror autoFocus value={source} onChange={onChange} />
-      <CodeMirror editable={false} value={output} extensions={[go()]} />
-    </>
+    <div className="flex flex-col h-full">
+      <h1 className="text-2xl p-2 text-center">Tempo Playground</h1>
+      <div className="flex h-full">
+        <div className="flex-1/2 border-t border-r border-gray-200">
+          <span className="font-medium block px-2 pt-1">Tempo source code</span>
+          <CodeMirror autoFocus value={source} onChange={onChange} />
+        </div>
+        <div className="flex-1/2 border-t border-r border-gray-200">
+          <span className="font-medium block px-2 pt-1">Generated Go code</span>
+          <CodeMirror editable={false} value={output} extensions={[go()]} />
+        </div>
+      </div>
+    </div>
   );
 }
 
