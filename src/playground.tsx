@@ -1,18 +1,27 @@
 import { useState, useEffect } from "react";
 
-type CompilerError = {
+export type CompilerError = {
   error: string;
   start?: [number, number];
   end?: [number, number];
 };
 
-type CompilerOutput = {
+export type CompilerOutput = {
   errors: CompilerError[];
   output?: string;
 };
 
-type Playground = {
-  compile(input: string): CompilerOutput;
+export type CompilerLang = "ts" | "go";
+
+export type CompilerInput = {
+  source: string;
+  lang: CompilerLang;
+  disableTypes: boolean;
+  runtime: string;
+};
+
+export type Playground = {
+  compile(input: CompilerInput): CompilerOutput;
 };
 
 declare global {

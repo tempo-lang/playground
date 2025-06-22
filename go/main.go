@@ -17,10 +17,19 @@ func compileWrapper() js.Func {
 			return "Invalid no of arguments passed"
 		}
 
-		inputSource := args[0].String()
+		inputSource := args[0].Get("source").String()
+		lang := args[0].Get("lang").String()
+		disableTypes := args[0].Get("disableTypes").Bool()
+		runtime := args[0].Get("runtime").String()
+
+		opts := compiler.Options{
+			Language:     compiler.CompilerLanguage(lang),
+			RuntimePath:  runtime,
+			DisableTypes: disableTypes,
+		}
 
 		inputStream := antlr.NewInputStream(inputSource)
-		sourceOutput, errors := compiler.Compile(inputStream, nil)
+		sourceOutput, errors := compiler.Compile(inputStream, &opts)
 		if errors != nil {
 			errorOutput := []any{}
 			for _, error := range errors {
