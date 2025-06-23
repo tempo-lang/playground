@@ -1,10 +1,9 @@
 import { useCallback, useState } from "react";
-import { usePlayground, type CompilerLang } from "./playground";
+import { usePlayground, type CompilerLang } from "./usePlayground";
 import CodeMirror from "@uiw/react-codemirror";
 import { go } from "@codemirror/lang-go";
 import { linter, type Diagnostic } from "@codemirror/lint";
-
-import * as sim from "@tempo-lang/tempo/simulator";
+import Simulate from "./Simulate";
 
 const initCode = `func@(A,B) pingPong(count: Int@[A,B]) {
   if count > 0 {
@@ -34,11 +33,9 @@ function App() {
 
   const [source, setSource] = useState(initCode);
   const [lang, setLang] = useState<CompilerLang>("go");
-  const [simResult, setSimResult] = useState("");
 
   const onChange = useCallback((val: string) => {
     setSource(val);
-    setSimResult("");
   }, []);
 
   let output = "loading...";
@@ -65,32 +62,6 @@ function App() {
     }
   }
 
-  const simulate = async () => {
-    if (!playground) return;
-
-    const { output, errors } = playground.compile({ source, lang: "ts", disableTypes: true, runtime: import.meta.env.BASE_URL + "runtime.js" });
-
-    if (!output || errors.length > 0) return;
-
-    console.log("sim output", output);
-
-    const code = await import("data:text/javascript;base64," + btoa(output));
-    console.log("sim code", code);
-
-    const funcs = Object.keys(code).filter((func) => func.startsWith("main_"));
-    const processes: sim.Processes = {};
-    for (const f of funcs) {
-      const role = f.slice("main_".length);
-      processes[role] = code[f];
-    }
-
-    console.log(processes);
-
-    const result = await sim.simulate(processes);
-    console.log("sim result", result);
-    setSimResult(JSON.stringify(result, null, 2));
-  };
-
   return (
     <div className="flex flex-col h-full">
       <h1 className="text-2xl p-2 text-center">Tempo Playground</h1>
@@ -109,11 +80,7 @@ function App() {
             <CodeMirror editable={false} value={output} extensions={[go()]} />
           </div>
           <div className="border-t border-gray-200">
-            <span className="font-medium inline-block px-2 pt-1">Simulate</span>
-            <button className="bg-blue-300 rounded px-1 cursor-pointer" onClick={() => simulate()}>
-              Run
-            </button>
-            <div>{simResult}</div>
+            <Simulate source={source} />
           </div>
         </div>
       </div>
