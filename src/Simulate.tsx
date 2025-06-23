@@ -29,7 +29,7 @@ function Simulate({ source, disabled }: SimulateProps) {
 
     return (
       <li key={i}>
-        <span className="ml-[5px] mr-[18px] inline-block text-right text-[#6c6c6c]" style={{ width: `${maxWidth}ch` }}>
+        <span className="ml-[5px] mr-[18px] inline-block text-right text-[#6c6c6c] select-none" style={{ width: `${maxWidth}ch` }}>
           {i + 1}
         </span>
         <span>{text}</span>
@@ -38,7 +38,7 @@ function Simulate({ source, disabled }: SimulateProps) {
   });
 
   const errorEl = simError ? (
-    <div>
+    <div className="px-4 text-red-800">
       {simError.name}: {simError.message}
     </div>
   ) : null;
@@ -90,6 +90,7 @@ async function simulate(source: string, setSimResult: (result: TraceMessage[]) =
     setSimResult(result);
     setSimError(undefined);
   } catch (error) {
+    setSimResult([]);
     setSimError(error as Error);
   }
 }

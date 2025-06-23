@@ -12,7 +12,8 @@ const examples: Examples = {
 
 func@(A,B) main() {
   pingPong@(A,B)(4);
-}`,
+}
+`,
   "Shift Roles": `func@(A,B,C,D) shiftRoles(count: Int@[A,B,C,D]) {
   if count > 0 {
     await A->B count;
@@ -22,13 +23,15 @@ func@(A,B) main() {
 
 func@(A,B,C,D) main() {
   shiftRoles@(A,B,C,D)(4);
-}`,
+}
+`,
   "Transitive Send": `func@(A,B,C) main() Int@[A,B,C] {
   let x: Int@A = 10;
   let y: Int@[A,B] = await A->B x;
   let z: Int@[A,B,C] = await B->C y;
   return z;
-}`,
+}
+`,
   Compose: `func@(A,B,C) compose(f: func@(A,B)(Int@A)Int@B, g: func@(B,C)(Int@B)Int@C) func@(A,B,C)(Int@A)Int@C {
   return func@(A,B,C) (input: Int@A) Int@C {
     return g(f(input));
@@ -46,7 +49,8 @@ func@(A,B,C) main() Int@C {
   let c = compose@(A,B,C)(f, g);
 
   return c(input);
-}`,
+}
+`,
   "Distributed Pair": `struct@(A,B) Pair {
   x: Int@A,
   y: String@B
@@ -60,7 +64,8 @@ func@(A,B) main() Pair@(A,B) {
     x: await number,
     y: await text
   };
-}`,
+}
+`,
 };
 
 export default examples;
