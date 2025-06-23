@@ -4,7 +4,7 @@ go 1.24.3
 
 require (
 	github.com/antlr4-go/antlr/v4 v4.13.1
-	github.com/tempo-lang/tempo v0.0.0-20250622145410-780f78808b9d
+	github.com/tempo-lang/tempo v0.0.0-20250623131310-e1b5b33c6e31
 )
 
 require (
