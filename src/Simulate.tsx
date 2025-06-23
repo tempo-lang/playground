@@ -6,24 +6,35 @@ import { inputClasses } from "./App";
 
 export type SimulateProps = {
   source: string;
+  disabled?: boolean;
 };
 
-function Simulate({ source }: SimulateProps) {
+function Simulate({ source, disabled }: SimulateProps) {
   const [simResult, setSimResult] = useState<TraceMessage[]>([]);
   const [simError, setSimError] = useState<Error | undefined>(undefined);
 
+  const maxWidth = simResult.length > 0 ? Math.ceil(Math.log10(simResult.length)) : 1;
+
   const result = simResult.map((msg, i) => {
+    const value = JSON.stringify(msg.value);
+    let text = "";
     switch (msg.type) {
       case "com":
-        return <li key={i}>{`${msg.sender} -> [${msg.receivers.join(",")}]: ${msg.value}`}</li>;
+        text = `${msg.sender} -> ${msg.receivers.join(",")}: ${value}`;
+        break;
       case "return":
-        return (
-          <li key={i}>
-            {`Return ${msg.role}`}
-            {msg.value ? `: ${msg.value}` : null}
-          </li>
-        );
+        text = `Return ${msg.role}` + (msg.value ? `: ${value}` : "");
+        break;
     }
+
+    return (
+      <li key={i}>
+        <span className="ml-[5px] mr-[18px] inline-block text-right text-[#6c6c6c]" style={{ width: `${maxWidth}ch` }}>
+          {i + 1}
+        </span>
+        <span>{text}</span>
+      </li>
+    );
   });
 
   const errorEl = simError ? (
@@ -36,11 +47,11 @@ function Simulate({ source }: SimulateProps) {
     <>
       <div className="flex gap-2 items-center px-2 py-1 border-t border-b border-gray-200 bg-gray-50">
         <span className="font-medium">Simulate</span>
-        <button className={inputClasses} onClick={() => simulate(source, setSimResult, setSimError)}>
+        <button className={inputClasses} disabled={disabled} onClick={() => simulate(source, setSimResult, setSimError)}>
           Run
         </button>
       </div>
-      <div className="grow-0 basis-1/2 overflow-scroll pb-10 pt-2 px-10">
+      <div className="grow-0 basis-1/2 overflow-scroll pb-10 pt-2 text-[13px] font-mono leading-[1.4]">
         {errorEl}
         <ul>{result}</ul>
       </div>
@@ -48,7 +59,7 @@ function Simulate({ source }: SimulateProps) {
   );
 }
 
-async function simulate(source: string, setSimResult: (result: TraceMessage[]) => void, setSimError: (err: Error) => void) {
+async function simulate(source: string, setSimResult: (result: TraceMessage[]) => void, setSimError: (err: Error | undefined) => void) {
   if (!playground) return;
 
   const { output, errors } = playground.compile({ source, lang: "ts", disableTypes: true, runtime: import.meta.env.BASE_URL + "runtime.js" });
@@ -70,9 +81,14 @@ async function simulate(source: string, setSimResult: (result: TraceMessage[]) =
 
     console.log(processes);
 
+    if (Object.keys(processes).length == 0) {
+      throw new Error("no `main` function found.");
+    }
+
     const result = await runSimulation(processes);
     console.log("sim result", result);
     setSimResult(result);
+    setSimError(undefined);
   } catch (error) {
     setSimError(error as Error);
   }

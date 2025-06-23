@@ -36,7 +36,7 @@ func compileWrapper() js.Func {
 				switch err := error.(type) {
 				case *parser.SyntaxError:
 					errorOutput = append(errorOutput, map[string]any{
-						"error": err.Error(),
+						"error": err.Message(),
 						"start": []any{err.Line(), err.Column()},
 						"end":   []any{err.Line(), err.Column()},
 					})
