@@ -85,7 +85,12 @@ function App() {
 
   return (
     <div className="flex flex-col h-full">
-      <h1 className="text-2xl p-2 text-center basis-12 grow-0 shrink-0 bg-[#3f82c8] text-white">Tempo Playground</h1>
+      <div>
+        <h1 className="text-2xl p-2 text-center basis-12 grow-0 shrink-0 bg-[#3f82c8] text-white">Tempo Playground</h1>
+        <a href="/docs" className="absolute top-3 right-4 text-blue-50 cursor-pointer hover:text-white">
+          Documentation
+        </a>
+      </div>
       <div className="flex" style={{ height: "calc(100% - 3rem)" }}>
         <div className="flex flex-col basis-1/2 w-1/2 border-r border-gray-200">
           <div className="flex gap-2 items-center px-2 py-1 border-b border-gray-200 bg-gray-50">
@@ -108,6 +113,9 @@ function App() {
           <div className="flex gap-2 items-center px-2 py-1 border-b border-gray-200 bg-gray-50">
             <span className="font-medium">Generated code</span>
             <select className={inputClasses} value={lang} onChange={(e) => setLang(e.target.value as CompilerLang)}>
+              <option value="choose" disabled>
+                Choose Language
+              </option>
               <option value="go">Go</option>
               <option value="ts">TypeScript</option>
             </select>
