@@ -19,6 +19,18 @@ func@(A,B) main() {
   pingPong@(A,B)(4);
 }
 `,
+  "Transitive Send": `/*
+ * This example demonstrates how a shared value can be propagated transitively.
+ * First A shares the value with B, whereafter B shares it with C.
+ */
+
+func@(A,B,C) main() Int@[A,B,C] {
+  let x: Int@A = 10;
+  let y: Int@[A,B] = await A->B x;
+  let z: Int@[A,B,C] = await B->C y;
+  return z;
+}
+`,
   "Shift Roles": `/*
  * In the shiftRoles function, A will send the count to B.
  * Next, the function is called recursively but with all roles shifted one spot.
@@ -37,16 +49,39 @@ func@(A,B,C,D) main() {
   shiftRoles@(A,B,C,D)(4);
 }
 `,
-  "Transitive Send": `/*
- * This example demonstrates how a shared value can be propagated transitively.
- * First A shares the value with B, whereafter B shares it with C.
+  Loops: `/*
+ * This example demonstrates two approaches to distributed loops.
+ *
+ * In the "sharedLoop" example, A starts by sending the total iteration count to B.
+ * Now both A and B know how many times to enter the loop.
+ *
+ * In the "controlledLoop" example, A controls how many times B will enter the loop.
+ * A will locally evaluate "i > 0" and send only the boolean result.
+ * B will enter the loop repeatedly until "false" is received from A.
+ * Locally, only A knows how many steps to take in the loop.
  */
 
-func@(A,B,C) main() Int@[A,B,C] {
-  let x: Int@A = 10;
-  let y: Int@[A,B] = await A->B x;
-  let z: Int@[A,B,C] = await B->C y;
-  return z;
+func@(A,B) sharedLoop(count: Int@A) {
+  let i: Int@[A,B] = await A->B count;
+  while i > 0 {
+    await B->A "shared loop";
+    i = i - 1;
+  }
+}
+
+func@(A,B) controlledLoop(count: Int@A) {
+  let i: Int@A = count;
+  while await A->B (i > 0) {
+    await B->A "controlled loop";
+    i = i - 1;
+  }
+}
+
+func@(A,B) main() {
+  let count: Int@A = 3;
+  
+  sharedLoop@(A,B)(count);
+  controlledLoop@(A,B)(count);
 }
 `,
   "Distributed Pair": `/*
