@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
-    "@tempo-lang/tempo": "npm:@jsr/tempo-lang__tempo@^0.5.0",
+    "@tempo-lang/tempo": "npm:@jsr/tempo-lang__tempo@^0.6.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.10"
@@ -33,6 +33,6 @@
     "globals": "^16.0.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^7.0.6"
   }
 }

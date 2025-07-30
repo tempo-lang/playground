@@ -4,7 +4,7 @@ go 1.24.3
 
 require (
 	github.com/antlr4-go/antlr/v4 v4.13.1
-	github.com/tempo-lang/tempo v0.0.0-20250702114345-d736361041f5
+	github.com/tempo-lang/tempo v0.0.0-20250730112402-a5e5121484f7
 )
 
 require (
@@ -12,6 +12,6 @@ require (
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b // indirect
-	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/exp v0.0.0-20250718183923-645b1fa84792 // indirect
+	golang.org/x/sys v0.34.0 // indirect
 )
