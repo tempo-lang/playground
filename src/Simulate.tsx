@@ -13,7 +13,8 @@ function Simulate({ source, disabled }: SimulateProps) {
   const [simResult, setSimResult] = useState<TraceMessage[]>([]);
   const [simError, setSimError] = useState<Error | undefined>(undefined);
 
-  const maxWidth = simResult.length > 0 ? Math.ceil(Math.log10(simResult.length)) : 1;
+  const maxWidth =
+    simResult.length > 0 ? Math.ceil(Math.log10(simResult.length)) : 1;
 
   const result = simResult.map((msg, i) => {
     const value = JSON.stringify(msg.value);
@@ -29,7 +30,10 @@ function Simulate({ source, disabled }: SimulateProps) {
 
     return (
       <li key={i}>
-        <span className="ml-[5px] mr-[18px] inline-block text-right text-[#6c6c6c] select-none" style={{ width: `${maxWidth}ch` }}>
+        <span
+          className="ml-[5px] mr-[18px] inline-block text-right text-[#6c6c6c] select-none"
+          style={{ width: `${maxWidth}ch` }}
+        >
           {i + 1}
         </span>
         <span>{text}</span>
@@ -47,7 +51,11 @@ function Simulate({ source, disabled }: SimulateProps) {
     <>
       <div className="flex gap-2 items-center px-2 py-1 border-t border-b border-gray-200 bg-gray-50">
         <span className="font-medium">Simulate</span>
-        <button className={inputClasses} disabled={disabled} onClick={() => simulate(source, setSimResult, setSimError)}>
+        <button
+          className={inputClasses}
+          disabled={disabled}
+          onClick={() => simulate(source, setSimResult, setSimError)}
+        >
           Run
         </button>
       </div>
@@ -59,17 +67,28 @@ function Simulate({ source, disabled }: SimulateProps) {
   );
 }
 
-async function simulate(source: string, setSimResult: (result: TraceMessage[]) => void, setSimError: (err: Error | undefined) => void) {
+async function simulate(
+  source: string,
+  setSimResult: (result: TraceMessage[]) => void,
+  setSimError: (err: Error | undefined) => void
+) {
   if (!playground) return;
 
-  const { output, errors } = playground.compile({ source, lang: "ts", disableTypes: true, runtime: import.meta.env.BASE_URL + "runtime.js" });
+  const { output, errors } = playground.compile({
+    source,
+    lang: "ts",
+    disableTypes: true,
+    runtime: import.meta.env.BASE_URL + "runtime.js",
+  });
 
   if (!output || errors.length > 0) return;
 
   console.log("sim output", output);
 
   try {
-    const code = await import("data:text/javascript;base64," + btoa(output));
+    const code = await import(
+      /* @vite-ignore */ "data:text/javascript;base64," + btoa(output)
+    );
     console.log("sim code", code);
 
     const funcs = Object.keys(code).filter((func) => func.startsWith("main_"));
@@ -108,7 +127,9 @@ type TraceMessage =
       value: unknown;
     };
 
-async function runSimulation(processes: sim.Processes): Promise<TraceMessage[]> {
+async function runSimulation(
+  processes: sim.Processes
+): Promise<TraceMessage[]> {
   class Tracer implements Transport {
     #inner: Transport;
     #role: string;
@@ -121,7 +142,12 @@ async function runSimulation(processes: sim.Processes): Promise<TraceMessage[]> 
     }
 
     send<T>(value: T, ...roles: string[]): void {
-      this.sends.push({ type: "com", value, sender: this.#role, receivers: roles });
+      this.sends.push({
+        type: "com",
+        value,
+        sender: this.#role,
+        receivers: roles,
+      });
       this.#inner.send(value, ...roles);
     }
 
@@ -141,7 +167,7 @@ async function runSimulation(processes: sim.Processes): Promise<TraceMessage[]> 
         const trans = new Tracer(queue.role(role), role, sends);
         const result: unknown = await processes[role](new Env(trans));
         sends.push({ type: "return", role, value: result });
-      })(),
+      })()
     );
   }
 

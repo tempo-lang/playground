@@ -116,6 +116,34 @@ func@(A,B) main() Pair@(B,A) {
   return pair.exchange();
 }
 `,
+  "Remote Procedure Calls": `/*
+ * In this example we define the 'RPC' interface for a remote procedure call.
+ * The method 'call' will send the value from 'A' to 'B',
+ * then 'B' will make a computation on the value and send the result back to 'A'.
+ */
+
+interface@(A, B) RPC {
+  func@(A, B) call(input: Int@A) async Int@A;
+}
+
+struct@(A,B) RemoteCall implements RPC@(A,B) {
+  fn: func@(B)(Int@B)Int@B;
+
+  func@(A, B) call(input: Int@A) async Int@A {
+    let output = fn(await A->B input);
+    return B->A output;
+  }
+}
+
+func@(A,B) main() {
+  let double = func@B (input: Int@B) Int@B {
+    return input * 2;
+  };
+
+  let rpc: RPC@(A,B) = RemoteCall@(A,B) { fn: double };
+
+  let result: Int@A = await rpc.call(10@A);
+}`,
   Compose: `func@(A,B,C) compose(f: func@(A,B)(Int@A)Int@B, g: func@(B,C)(Int@B)Int@C) func@(A,B,C)(Int@A)Int@C {
   return func@(A,B,C) (input: Int@A) Int@C {
     return g(f(input));
