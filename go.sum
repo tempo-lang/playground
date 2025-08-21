@@ -35,6 +35,10 @@ github.com/tempo-lang/tempo v0.0.0-20250819111211-cadc06d42294 h1:0AZvtiXjvlvIS0
 github.com/tempo-lang/tempo v0.0.0-20250819111211-cadc06d42294/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
 github.com/tempo-lang/tempo v0.0.0-20250819112129-4829ec466b74 h1:rjB96xzvl/NMLnr7qBAKyxoE/iyOlApPPs/T8awx3h4=
 github.com/tempo-lang/tempo v0.0.0-20250819112129-4829ec466b74/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
+github.com/tempo-lang/tempo v0.0.0-20250821090559-10731a1d34b2 h1:vl9iQX4ggI6YDsKKBmZrtBPe1DYYLmGJGBxHeYgTn0U=
+github.com/tempo-lang/tempo v0.0.0-20250821090559-10731a1d34b2/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
+github.com/tempo-lang/tempo v0.0.0-20250821091821-7f3d46fd3242 h1:DNYTBI8Lnz/UrOpGjdU2EJ2yZJXG6nAy0pfiMm6mVbk=
+github.com/tempo-lang/tempo v0.0.0-20250821091821-7f3d46fd3242/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
 golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6 h1:y5zboxd6LQAqYIhHnB48p0ByQ/GnQx2BE33L8BOHQkI=
 golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6/go.mod h1:U6Lno4MTRCDY+Ba7aCcauB9T60gsv5s4ralQzP72ZoQ=
 golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b h1:M2rDM6z3Fhozi9O7NWsxAkg/yqS/lQJ6PmkyIV3YP+o=
@@ -43,6 +47,8 @@ golang.org/x/exp v0.0.0-20250718183923-645b1fa84792 h1:R9PFI6EUdfVKgwKjZef7QIwGc
 golang.org/x/exp v0.0.0-20250718183923-645b1fa84792/go.mod h1:A+z0yzpGtvnG90cToK5n2tu8UJVP2XUATh+r+sfOOOc=
 golang.org/x/exp v0.0.0-20250813145105-42675adae3e6 h1:SbTAbRFnd5kjQXbczszQ0hdk3ctwYf3qBNH9jIsGclE=
 golang.org/x/exp v0.0.0-20250813145105-42675adae3e6/go.mod h1:4QTo5u+SEIbbKW1RacMZq1YEfOBqeXa19JeshGi+zc4=
+golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b h1:DXr+pvt3nC887026GRP39Ej11UATqWDmWuS99x26cD0=
+golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b/go.mod h1:4QTo5u+SEIbbKW1RacMZq1YEfOBqeXa19JeshGi+zc4=
 golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.6.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.33.0 h1:q3i8TbbEz+JRD9ywIRlyRAQbM0qF7hu24q3teo2hbuw=
