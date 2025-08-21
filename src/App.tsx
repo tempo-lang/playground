@@ -39,7 +39,12 @@ function App() {
   let output = "loading...";
   const diagnostics: Diagnostic[] = [];
   if (playground) {
-    const compile = playground.compile({ source, lang, disableTypes: false, runtime: "@tempo-lang/tempo/runtime" });
+    const compile = playground.compile({
+      source,
+      lang,
+      disableTypes: false,
+      runtime: "@tempo-lang/tempo/runtime",
+    });
     const { output: sourceOutput, errors } = compile;
     if (sourceOutput) {
       output = sourceOutput;
@@ -86,8 +91,13 @@ function App() {
   return (
     <div className="flex flex-col h-full">
       <div>
-        <h1 className="text-2xl p-2 text-center basis-12 grow-0 shrink-0 bg-[#3f82c8] text-white">Tempo Playground</h1>
-        <a href="/docs" className="absolute top-3 right-4 text-blue-50 cursor-pointer hover:text-white">
+        <h1 className="text-2xl p-2 text-center basis-12 grow-0 shrink-0 bg-[#3f82c8] text-white">
+          Tempo Playground
+        </h1>
+        <a
+          href="/docs"
+          className="absolute top-3 right-4 text-blue-50 cursor-pointer hover:text-white"
+        >
           Documentation
         </a>
       </div>
@@ -98,7 +108,8 @@ function App() {
             <select
               className={inputClasses}
               onChange={(e) => {
-                if (e.target.value != "choose") setSource(examples[e.target.value]);
+                if (e.target.value != "choose")
+                  setSource(examples[e.target.value]);
               }}
             >
               <option value="choose" disabled>
@@ -107,12 +118,23 @@ function App() {
               {exampleOptions}
             </select>
           </div>
-          <CodeMirror extensions={[linter(() => diagnostics, { delay: 0 })]} className="flex-1" height="100%" autoFocus value={source} onChange={onChange} />
+          <CodeMirror
+            extensions={[go(), linter(() => diagnostics, { delay: 0 })]}
+            className="flex-1 grow-0 basis-full overflow-scroll w-full block"
+            height="100%"
+            autoFocus
+            value={source}
+            onChange={onChange}
+          />
         </div>
         <div className="flex flex-col basis-1/2 w-1/2 border-r border-gray-200">
           <div className="flex gap-2 items-center px-2 py-1 border-b border-gray-200 bg-gray-50">
             <span className="font-medium">Generated code</span>
-            <select className={inputClasses} value={lang} onChange={(e) => setLang(e.target.value as CompilerLang)}>
+            <select
+              className={inputClasses}
+              value={lang}
+              onChange={(e) => setLang(e.target.value as CompilerLang)}
+            >
               <option value="choose" disabled>
                 Choose Language
               </option>
@@ -121,7 +143,13 @@ function App() {
             </select>
           </div>
           <div className="grow-0 basis-1/2 overflow-scroll w-full block">
-            <CodeMirror height="100%" width="100%" editable={false} value={output} extensions={[languageExt(lang)]} />
+            <CodeMirror
+              height="100%"
+              width="100%"
+              editable={false}
+              value={output}
+              extensions={[languageExt(lang)]}
+            />
           </div>
           <Simulate disabled={diagnostics.length > 0} source={source} />
         </div>
