@@ -19,13 +19,11 @@ func compileWrapper() js.Func {
 
 		inputSource := args[0].Get("source").String()
 		lang := args[0].Get("lang").String()
-		disableTypes := args[0].Get("disableTypes").Bool()
 		runtime := args[0].Get("runtime").String()
 
 		opts := compiler.Options{
-			Language:     compiler.CompilerLanguage(lang),
-			RuntimePath:  runtime,
-			DisableTypes: disableTypes,
+			Language:    compiler.CompilerLanguage(lang),
+			RuntimePath: runtime,
 		}
 
 		inputStream := antlr.NewInputStream(inputSource)

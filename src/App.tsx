@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import { usePlayground, type CompilerLang } from "./usePlayground";
 import CodeMirror from "@uiw/react-codemirror";
-import { go } from "@codemirror/lang-go";
+import { go, goLanguage } from "@codemirror/lang-go";
+import { java } from "@codemirror/lang-java";
 import { javascript } from "@codemirror/lang-javascript";
 import { linter, type Diagnostic } from "@codemirror/lint";
 import Simulate from "./Simulate";
@@ -42,7 +43,6 @@ function App() {
     const compile = playground.compile({
       source,
       lang,
-      disableTypes: false,
       runtime: "@tempo-lang/tempo/runtime",
     });
     const { output: sourceOutput, errors } = compile;
@@ -83,8 +83,12 @@ function App() {
     switch (lang) {
       case "ts":
         return javascript({ typescript: true });
+      case "js":
+        return javascript({ typescript: false });
       case "go":
         return go();
+      case "java":
+        return java();
     }
   }, []);
 
@@ -119,7 +123,7 @@ function App() {
             </select>
           </div>
           <CodeMirror
-            extensions={[go(), linter(() => diagnostics, { delay: 0 })]}
+            extensions={[goLanguage, linter(() => diagnostics, { delay: 0 })]}
             className="flex-1 grow-0 basis-full overflow-scroll w-full block"
             height="100%"
             autoFocus
@@ -139,7 +143,9 @@ function App() {
                 Choose Language
               </option>
               <option value="go">Go</option>
+              <option value="java">Java</option>
               <option value="ts">TypeScript</option>
+              <option value="js">JavaScript</option>
             </select>
           </div>
           <div className="grow-0 basis-1/2 overflow-scroll w-full block">

@@ -11,12 +11,11 @@ export type CompilerOutput = {
   output?: string;
 };
 
-export type CompilerLang = "ts" | "go";
+export type CompilerLang = "go" | "ts" | "js" | "java";
 
 export type CompilerInput = {
   source: string;
   lang: CompilerLang;
-  disableTypes: boolean;
   runtime: string;
 };
 
@@ -31,7 +30,10 @@ declare global {
 async function configurePlayground(): Promise<Playground> {
   const go = new Go();
 
-  const result = await WebAssembly.instantiateStreaming(fetch(import.meta.env.BASE_URL + "playground.wasm"), go.importObject);
+  const result = await WebAssembly.instantiateStreaming(
+    fetch(import.meta.env.BASE_URL + "playground.wasm"),
+    go.importObject
+  );
 
   go.run(result.instance);
 
@@ -39,7 +41,9 @@ async function configurePlayground(): Promise<Playground> {
 }
 
 export function usePlayground(): Playground | undefined {
-  const [playground, setPlayground] = useState<Playground | undefined>(undefined);
+  const [playground, setPlayground] = useState<Playground | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     console.log("call configure");

@@ -76,8 +76,7 @@ async function simulate(
 
   const { output, errors } = playground.compile({
     source,
-    lang: "ts",
-    disableTypes: true,
+    lang: "js",
     runtime: import.meta.env.BASE_URL + "runtime.js",
   });
 
