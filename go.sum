@@ -41,6 +41,10 @@ github.com/tempo-lang/tempo v0.0.0-20250821091821-7f3d46fd3242 h1:DNYTBI8Lnz/UrO
 github.com/tempo-lang/tempo v0.0.0-20250821091821-7f3d46fd3242/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
 github.com/tempo-lang/tempo v0.0.0-20250822094625-1a71a3751e9b h1:b5CjaVyS1dWy1DTvTeXpR3n0qXi1Ga1EPTBQ7nqSmGU=
 github.com/tempo-lang/tempo v0.0.0-20250822094625-1a71a3751e9b/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
+github.com/tempo-lang/tempo v0.0.0-20250904135222-b86a27500c61 h1:S0sasF/JVIOJOEQA0YoPHhDj+6yKXl4S5tGx7uijbPY=
+github.com/tempo-lang/tempo v0.0.0-20250904135222-b86a27500c61/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
+github.com/tempo-lang/tempo v0.0.0-20250905090132-c49aa24f2d35 h1:NDFO0tf8tIgyyCSStSKwVzADpJ2sFKr22KiECt2S+gs=
+github.com/tempo-lang/tempo v0.0.0-20250905090132-c49aa24f2d35/go.mod h1:phTdzdY37+xZmahlV63MML/iW5NEpUlzNQhi80rbrc8=
 golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6 h1:y5zboxd6LQAqYIhHnB48p0ByQ/GnQx2BE33L8BOHQkI=
 golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6/go.mod h1:U6Lno4MTRCDY+Ba7aCcauB9T60gsv5s4ralQzP72ZoQ=
 golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b h1:M2rDM6z3Fhozi9O7NWsxAkg/yqS/lQJ6PmkyIV3YP+o=
