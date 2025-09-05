@@ -144,6 +144,60 @@ func@(A,B) main() {
 
   let result: Int@A = await rpc.call(10@A);
 }`,
+  "Diffie Hellman": `/*
+ * This example demonstrates a simple DiffieHellman exchange.
+ * When running the simulation A and B obtains the shared secret, only sharing their public keys.
+ */
+
+// Generic interface for exponentiation
+interface@X Math {
+  func@X Exp(base: Int@X, exp: Int@X) Int@X;
+}
+
+// The shared secret obtained by Diffie Hellman
+struct@(A,B) Secret {
+  A: Int@A;
+  B: Int@B;
+}
+
+// The Diffie Hellman computation
+func@(A,B) DiffieHellman(mathA: Math@A, mathB: Math@B) Secret@(A,B) {
+  let p = 23;
+  let g = 5;
+
+  let a = 4@A;
+  let b = 3@B;
+
+  let A: async Int@B = A->B mathA.Exp(g, a) % p;
+  let B: async Int@A = B->A mathB.Exp(g, b) % p;
+
+  let sA = mathA.Exp(await B, a) % p;
+  let sB = mathB.Exp(await A, b) % p;
+
+  return Secret@(A,B) {
+    A: sA, B: sB
+  };
+}
+
+// Naive implementation of exponentiation
+struct@X MathImpl implements Math@X {
+  func@X Exp(base: Int@X, exp: Int@X) Int@X {
+    let result = 1;
+    let i = 0;
+    while i < exp {
+      result = result * base;
+      i = i + 1;
+    }
+    return result;
+  }
+}
+
+// Main function to test it
+func@(A,B) main() Secret@(A,B) {
+  let result = DiffieHellman@(A,B)(MathImpl@A {}, MathImpl@B {});
+  return result;
+}
+`,
   Compose: `func@(A,B,C) compose(f: func@(A,B)(Int@A)Int@B, g: func@(B,C)(Int@B)Int@C) func@(A,B,C)(Int@A)Int@C {
   return func@(A,B,C) (input: Int@A) Int@C {
     return g(f(input));
