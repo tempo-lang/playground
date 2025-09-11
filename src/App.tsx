@@ -38,6 +38,8 @@ function App() {
   }, []);
 
   let output = "loading...";
+  let compilerErrors = false;
+
   const diagnostics: Diagnostic[] = [];
   if (playground) {
     const compile = playground.compile({
@@ -49,15 +51,18 @@ function App() {
     if (sourceOutput) {
       output = sourceOutput;
     } else {
+      compilerErrors = true;
       output = errors
-        .map(({ start, end, error }) => {
-          if (start && end) {
-            return `${start[0]}:${start[1]}: ${error}`;
+        .map(({ start, end, error, formatted }) => {
+          if (formatted) {
+            return formatted;
+          } else if (start && end) {
+            return `${start[0]}:${start[1]}: ${error}\n`;
           } else {
-            return error;
+            return error + "\n";
           }
         })
-        .join("\n");
+        .join("");
     }
 
     for (const error of errors) {
@@ -154,7 +159,7 @@ function App() {
               width="100%"
               editable={false}
               value={output}
-              extensions={[languageExt(lang)]}
+              extensions={!compilerErrors ? [languageExt(lang)] : []}
             />
           </div>
           <Simulate disabled={diagnostics.length > 0} source={source} />

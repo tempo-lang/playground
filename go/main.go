@@ -3,6 +3,7 @@
 package main
 
 import (
+	"bytes"
 	"syscall/js"
 
 	"github.com/antlr4-go/antlr/v4"
@@ -41,10 +42,15 @@ func compileWrapper() js.Func {
 				case type_error.Error:
 					rule := err.ParserRule()
 					endTokenLength := rule.GetStop().GetStop() - rule.GetStop().GetStart()
+
+					buf := new(bytes.Buffer)
+					type_error.FormatError(buf, inputStream, "playground", err, false)
+
 					errorOutput = append(errorOutput, map[string]any{
-						"error": err.Error(),
-						"start": []any{rule.GetStart().GetLine(), rule.GetStart().GetColumn()},
-						"end":   []any{rule.GetStop().GetLine(), rule.GetStop().GetColumn() + endTokenLength + 1},
+						"error":     err.Error(),
+						"start":     []any{rule.GetStart().GetLine(), rule.GetStart().GetColumn()},
+						"end":       []any{rule.GetStop().GetLine(), rule.GetStop().GetColumn() + endTokenLength + 1},
+						"formatted": buf.String(),
 					})
 				default:
 					errorOutput = append(errorOutput, map[string]any{

@@ -4,6 +4,7 @@ export type CompilerError = {
   error: string;
   start?: [number, number];
   end?: [number, number];
+  formatted?: string;
 };
 
 export type CompilerOutput = {
