@@ -150,8 +150,8 @@ func@(A,B) main() {
  */
 
 // Generic interface for exponentiation
-interface@X Math {
-  func@X Exp(base: Int@X, exp: Int@X) Int@X;
+interface Math {
+  func Exp(base: Int, exp: Int) Int;
 }
 
 // The shared secret obtained by Diffie Hellman
