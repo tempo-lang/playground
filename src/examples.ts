@@ -180,8 +180,8 @@ func@(A,B) DiffieHellman(mathA: Math@A, mathB: Math@B) Secret@(A,B) {
 }
 
 // Naive implementation of exponentiation
-struct@X MathImpl implements Math@X {
-  func@X Exp(base: Int@X, exp: Int@X) Int@X {
+struct MathImpl implements Math {
+  func Exp(base: Int, exp: Int) Int {
     let result = 1;
     let i = 0;
     while i < exp {
