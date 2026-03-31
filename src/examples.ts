@@ -79,7 +79,7 @@ func@(A,B) controlledLoop(count: Int@A) {
 
 func@(A,B) main() {
   let count: Int@A = 3;
-  
+
   sharedLoop@(A,B)(count);
   controlledLoop@(A,B)(count);
 }
@@ -217,6 +217,36 @@ func@(A,B,C) main() Int@C {
   return c(input);
 }
 `,
+  "Shared Functions": `/*
+ * This example demonstrates how local structs, interfaces, and functions can be shared among roles.
+ * Since f is a local value that only exists at A it can be sent to B.
+ * Even though only the data contained in x is sent, now both A and B can execute the call function together.
+ */
+
+interface Func {
+  func call(input: Int) Int;
+}
+
+struct Mult implements Func {
+  x: Int;
+
+  func call(input: Int) Int {
+    return input * x;
+  }
+}
+
+func@(A,B) main() Int@[A,B] {
+  let f = Mult@A { x: 4@A };
+
+  // When f is sent, it becomes a shared value Mult@[A,B],
+  // which is coerced to the interface Func@[A,B].
+  let g: Func@[A,B] = await A->B f;
+
+  // Now all methods of the interface are shared.
+  let x: Int@[A,B] = g.call(10@[A,B]); // output: 40
+
+  return x;
+}`,
 };
 
 export default examples;
